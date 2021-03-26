@@ -11,7 +11,7 @@ soup = BeautifulSoup(response.text, 'html.parser')
 song_names_spans = soup.find_all("span", class_="chart-element__information__song")[:100]
 song_names = [song.getText() for song in song_names_spans]
 
-# potify Authentication
+# Spotify Authentication
 sp = spotipy.Spotify(
     auth_manager=SpotifyOAuth(
         scope="playlist-modify-private",
