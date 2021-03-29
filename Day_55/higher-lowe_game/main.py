@@ -57,13 +57,3 @@ def number(guess):
 if __name__ == "__main__":
     app.run(debug=True)
 
-
-
-
-
-
-
-high = "https://media.giphy.com/media/ky9vnG678kzD91TO3N/giphy.gif"
-
-low = "https://media.giphy.com/media/dsQvwwzZq4SMm8ZIyi/giphy.gif"
-
