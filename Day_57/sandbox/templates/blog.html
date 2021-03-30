@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog</title>
+</head>
+<body>
+    {% for item in posts %}
+        <li>
+            <h1>{{ item.title }}</h1>
+            <h3>{{ item.subtitle }}</h3>
+            <p>{{ item.body }}</p>
+            <a href="{{ url_for('post', id=1) }}">go to post</a>
+        </li>
+
+    {% endfor %}
+</body>
+</html>

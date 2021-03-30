@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guess</title>
+</head>
+<body>
+{# using jinja templates #}
+    {% if my_name %}
+        <h1>Hello {{ my_name }}!</h1>
+        <h2>I think you are {{ gender }} </h2>
+        <h3>And maybe you are {{ age }} old</h3>
+    {% else %}
+      <h1>Please insert a name after url /guess/ </h1>
+    {% endif %}
+
+    <footer>
+        <h3>
+            &copy; 2007-{{year}}. Edgar Canro
+        </h3>
+    </footer>
+</body>
+</html>

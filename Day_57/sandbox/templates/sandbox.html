@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Blog</title>
+</head>
+<body>
+    {# using jinja templates #}
+    <ul id="navigation">
+    {% for item in navigation %}
+        <li><a href="{{ item.href }}">{{ item.caption }}</a></li>
+    {% endfor %}
+    </ul>
+
+    <h1>My Webpage</h1>
+    <p>Render from python to html, a random number: {{ a_variable }}</p>
+
+    <footer>
+        <h3>
+            &copy; 2007-{{year}}. Edgar Canro
+        </h3>
+    </footer>
+</body>
+</html>
