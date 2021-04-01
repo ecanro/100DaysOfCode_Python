@@ -311,6 +311,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\Day_59\server.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
       </map>
     </option>
   </component>
