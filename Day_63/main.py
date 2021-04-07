@@ -4,7 +4,13 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, URL
-import requests, os
+import requests, os, config
+
+# API vars
+MOVIE_DB_API_KEY = config.api_key
+MOVIE_DB_SEARCH_URL = "https://api.themoviedb.org/3/search/movie"
+MOVIE_DB_INFO_URL = "https://api.themoviedb.org/3/movie"
+MOVIE_DB_IMAGE_URL = "https://image.tmdb.org/t/p/w500"
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
@@ -23,15 +29,17 @@ class Movies(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(250), unique=True, nullable=False)
     year = db.Column(db.Integer, nullable=False)
-    description = db.Column(db.String(250), nullable=False)
-    rating = db.Column(db.Float, nullable=False)
-    ranking = db.Column(db.Integer, nullable=False)
-    review = db.Column(db.String(250), nullable=False)
+    description = db.Column(db.String(500), nullable=False)
+    rating = db.Column(db.Float, nullable=True)
+    ranking = db.Column(db.Integer, nullable=True)
+    review = db.Column(db.String(250), nullable=True)
     img_url = db.Column(db.String(250), nullable=False)
 
-    #optional:allow each movie object to be identified by title
+
+    # optional:allow each movie object to be identified by title
     def __repr__(self):
         return f'<Book {self.title}>'
+
 
 # This code must come _after_ the class definition
 if not os.path.isfile(DB_URI):
@@ -51,65 +59,108 @@ if not os.path.isfile(DB_URI):
 # db.session.commit()
 
 
+# Read form
+class FindMovieForm(FlaskForm):
+    title = StringField("Movie Title", validators=[DataRequired()])
+    submit = SubmitField("Add Movie")
+
+
 # Add form
-class AddForm(FlaskForm):
-    title = StringField('Title', _name='title', validators=[DataRequired()])
-    year = StringField('Year', _name='year', validators=[DataRequired()])
-    description = StringField('Description', _name='description', validators=[DataRequired()])
-    rating = StringField('Rating', _name='rating', validators=[DataRequired()])
-    ranking = StringField('Ranking', _name='ranking', validators=[DataRequired()])
-    review = StringField('Review', _name='review', validators=[DataRequired()])
-    img_url = StringField('Title', _name='url', validators=[DataRequired(), URL()])
-    submit = SubmitField('Done')
+# class AddForm(FlaskForm):
+#     title = StringField('Title', _name='title', validators=[DataRequired()])
+#     year = StringField('Year', _name='year', validators=[DataRequired()])
+#     description = StringField('Description', _name='description', validators=[DataRequired()])
+#     rating = StringField('Rating', _name='rating', validators=[DataRequired()])
+#     ranking = StringField('Ranking', _name='ranking', validators=[DataRequired()])
+#     review = StringField('Review', _name='review', validators=[DataRequired()])
+#     img_url = StringField('Title', _name='url', validators=[DataRequired(), URL()])
+#     submit = SubmitField('Done')
 
 
 # edit form
 class UpdateForm(FlaskForm):
-    ranking = StringField('Your rating out of 10, eg.: 9.5:', validators=[DataRequired()])
-    review = StringField('Your Review', validators=[DataRequired()])
+    rating = StringField('Your rating out of 10, eg.: 9.5:', validators=[DataRequired()])
+    # ranking = StringField('Your personal ranking:', validators=[DataRequired()])
+    review = StringField('Your Review:', validators=[DataRequired()])
     submit = SubmitField('Done')
+
 
 # home
 @app.route("/")
 def home():
     # Read
-    all_movies = db.session.query(Movies)
+    all_movies = Movies.query.order_by(Movies.rating).all()
+    for i in range(len(all_movies)):
+        all_movies[i].ranking = len(all_movies)-i
+    db.session.commit()
     return render_template("index.html", movies=all_movies)
 
 
 # add
-@app.route('/add', methods=['GET', 'POST'])
-def add():
-    form = AddForm()
-    if request.method == 'POST':
-        new_movie = Movies(
-            title=request.form['title'],
-            year=request.form['year'],
-            description=request.form['description'],
-            rating=request.form['rating'],
-            ranking=request.form['ranking'],
-            review=request.form['review'],
-            img_url=request.form['url']
-        )
-        db.session.add(new_movie)
-        db.session.commit()
-        return redirect(url_for('home'))
-    return render_template('add.html', form=form)
+# @app.route('/add', methods=['GET', 'POST'])
+# def add():
+#     form = AddForm()
+#     if request.method == 'POST':
+#         new_movie = Movies(
+#             title=request.form['title'],
+#             year=request.form['year'],
+#             description=request.form['description'],
+#             rating=request.form['rating'],
+#             ranking=request.form['ranking'],
+#             review=request.form['review'],
+#             img_url=request.form['url']
+#         )
+#         db.session.add(new_movie)
+#         db.session.commit()
+#         return redirect(url_for('home'))
+#     return render_template('add.html', form=form)
 
 
 # Update
+
+# add
+@app.route('/add', methods=['GET', 'POST'])
+def add():
+    form = FindMovieForm()
+    if form.validate_on_submit():
+        movie_title = form.title.data
+        response = requests.get(url=MOVIE_DB_SEARCH_URL, params={'api_key':MOVIE_DB_API_KEY, 'query': movie_title})
+        data = response.json()['results']
+        return render_template('select.html', options=data)
+    return render_template('add.html', form=form)
+
+
+# find
+@app.route('/find')
+def find():
+    movie_api_id = request.args.get('id')
+    if movie_api_id:
+        movie_api_url = f"{MOVIE_DB_INFO_URL}/{movie_api_id}"
+        response = requests.get(url=movie_api_url, params={'api_key':MOVIE_DB_API_KEY, 'language': 'en-US'})
+        data = response.json()
+        new_movie = Movies(
+            title=data['title'],
+            year=data['release_date'].split('-')[0],
+            img_url=f"{MOVIE_DB_IMAGE_URL}{data['poster_path']}",
+            description=data['overview']
+        )
+        db.session.add(new_movie)
+        db.session.commit()
+        return redirect(url_for('update', id=new_movie.id))
+
+
 @app.route('/update', methods=['GET', 'POST'])
 def update():
     form = UpdateForm()
-    movie_id = request.args.get['id'],
-    movie_to_update = Movies.query.get[movie_id],
+    movie_id = request.args.get('id')
+    movie_to_update = Movies.query.get(movie_id)
     if form.validate_on_submit():
-        movie_to_update.review = form.review.data,
-        movie_to_update.rating = float(form.rating.data),
+        movie_to_update.rating = float(form.rating.data)
+        # movie_to_update.ranking = form.ranking.data
+        movie_to_update.review = form.review.data
         db.session.commit()
         return redirect(url_for('home'))
     return render_template('edit.html', movie=movie_to_update, form=form)
-
 
 # Delete
 @app.route('/delete')

@@ -13,6 +13,7 @@
 {% block content %}
 <div class="content">
   <h1 class="heading">{{ movie.title}}</h1>
-      {{ wtf.quick_form(form) }}
+  <p class="description">Edit Movie Rating</p>
+      {{ wtf.quick_form(form, novalidate=True) }}
   </div>
 {% endblock %}
