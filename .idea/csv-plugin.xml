@@ -367,6 +367,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\Day_67\main.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
       </map>
     </option>
   </component>
