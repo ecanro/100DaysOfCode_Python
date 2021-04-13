@@ -45,6 +45,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\Day_31\flash-card-project\data\words_to_learn.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\Day_39\flight_search.py">
           <value>
             <Attribute>
@@ -382,6 +389,20 @@
           </value>
         </entry>
         <entry key="\Day_69\main.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\Day_71\main.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\Day_71\salaries_by_college_major.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
