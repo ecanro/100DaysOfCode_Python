@@ -395,6 +395,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\Day_71-72\salaries_by_college_major.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\Day_71\main.py">
           <value>
             <Attribute>
@@ -403,6 +410,13 @@
           </value>
         </entry>
         <entry key="\Day_71\salaries_by_college_major.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\Day_71to74\main.py">
           <value>
             <Attribute>
               <option name="separator" value="," />
