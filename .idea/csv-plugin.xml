@@ -423,6 +423,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\Day_71to74\salaries_by_college_major.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\Day_75\main.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
       </map>
     </option>
   </component>
