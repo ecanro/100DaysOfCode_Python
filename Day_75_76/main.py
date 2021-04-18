@@ -72,3 +72,40 @@ plt.plot(sets_by_year.index[:-2], sets_by_year.set_num[:-2])
 plt.show()
 
 # Two Separate Axes
+ax1 = plt.gca() # get current axes
+ax2 = ax1.twinx()
+ax1.set_xlabel('Year')
+ax1.set_ylabel('Number of sets', color='green')
+ax2.set_ylabel('Number of themes', color='blue')
+ax1.plot(sets_by_year.index[:-2], sets_by_year.set_num[:-2], 'g')
+ax2.plot(themes_by_year.index[:-2], themes_by_year.nr_themes[:-2], 'b')
+plt.show()
+
+avg_parts_set = sets.groupby('year').agg({'num_parts': pd.Series.nunique})
+avg_parts_set.rename(columns={'num_parts':'average'}, inplace=True)
+avg_parts_set.head()
+avg_parts_set.tail()
+
+plt.scatter(avg_parts_set.index[:-2], avg_parts_set.average[:-2])
+
+set_theme_count = sets['theme_id'].value_counts()
+print(set_theme_count[:5])
+
+themes = pd.read_csv('data/themes.csv')
+themes.head()
+
+print(themes[themes.name == 'Star Wars'])
+
+print(sets[sets.theme_id == 209])
+print(sets[sets.theme_id == 158])
+
+
+# convert pandas series into a pandas df
+set_theme_count = pd.DataFrame({'id':set_theme_count.index, 'set_count':set_theme_count.values})
+set_theme_count.head()
+
+merge_df = pd.merge(set_theme_count, themes, on='id')
+print(merge_df[:3])
+
+plt.bar(merge_df.name[:10], merge_df.set_count[:10])
+plt.show()
