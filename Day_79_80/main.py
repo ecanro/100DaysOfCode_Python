@@ -28,7 +28,7 @@ print(df_tesla.describe())
 # find missing values NaN (return true or false)
 print(f'Missing values for Tesla?: {df_tesla.isna().values.any()}')  # -> False
 # if is True get the number of missing values
-print(f'The number of missing values for BTC Search?: {df_tesla.isna().values.sum()}')  # -> 0
+print(f'The number of missing values for BTC Search?: {df_tesla.isna().values.summa()}')  # -> 0
 # describe without () is how using head and tile at same time and shape
 print(df_tesla.describe)
 
@@ -47,7 +47,7 @@ print(df_unemployment.describe())
 # find missing values NaN (return true or false)
 print(f'Missing values for U/E?: {df_unemployment.isna().values.any()}')  # -> False
 # if is True get the number of missing values
-print(f'The number of missing values for UE_BENEFITS Search?: {df_unemployment.isna().values.sum()}')  # -> 0
+print(f'The number of missing values for UE_BENEFITS Search?: {df_unemployment.isna().values.summa()}')  # -> 0
 # describe without () is how using head and tile at same time and shape
 print(df_unemployment.describe)
 
@@ -66,7 +66,7 @@ print(df_btc_search.describe())
 # find missing values NaN (return true or false)
 print(f'Missing values for BTC Search?: {df_btc_search.isna().values.any()}')
 # get the number of missing values
-print(f'The number of missing values for BTC Search?: {df_btc_search.isna().values.sum()}')  # -> 0
+print(f'The number of missing values for BTC Search?: {df_btc_search.isna().values.summa()}')  # -> 0
 # describe without () is how using head and tile at same time and shape
 print(df_btc_search.describe)
 
@@ -85,7 +85,7 @@ print(df_btc_price.describe())
 # find missing values NaN (return true or false)
 print(f'Missing values for BTC Search?: {df_btc_price.isna().values.any()}')  # -> True
 # if is True get the number of missing values
-print(f'The number of missing values for BTC Search?: {df_btc_price.isna().values.sum()}')  # -> 2
+print(f'The number of missing values for BTC Search?: {df_btc_price.isna().values.summa()}')  # -> 2
 # CLEAN DATA removing missing values
 df_btc_price.dropna(inplace=True)
 # describe without () is how using head and tile at same time and shape, but only work before use dropna

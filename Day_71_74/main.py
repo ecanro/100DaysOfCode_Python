@@ -83,7 +83,7 @@ print(df.count())
 print(df.count()['TAG'])
 # using group to group data
 # with sum to see how many post had every language
-print(df.groupby('TAG').sum())
+print(df.groupby('TAG').summa())
 #with count to see how many month exist
 print(df.groupby('TAG').count())
 
