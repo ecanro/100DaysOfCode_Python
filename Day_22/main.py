@@ -8,7 +8,7 @@
 # Todo 7: Detect when paddle misses
 # Todo 8: Keep Score
 
-from turtle import Screen, Turtle
+from turtle import Screen
 from paddle import Paddle
 from ball import Ball
 from scoreboard import Scoreboard

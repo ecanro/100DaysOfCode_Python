@@ -5,8 +5,9 @@ import pyperclip
 import json
 
 FONT_NAME = "Courier"
-# ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
+
+# ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
 def gen_password():
     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
@@ -33,8 +34,8 @@ def gen_password():
     password_input.insert(END, password)
     pyperclip.copy(password)
 
-# ---------------------------- FIND PASSWORD ------------------------------- #
 
+# ---------------------------- FIND PASSWORD ------------------------------- #
 
 def find_password():
     website = website_input.get()
@@ -53,7 +54,6 @@ def find_password():
 
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
-
 
 def save():
     website = website_input.get()
@@ -96,8 +96,8 @@ def clean_inputs():
     # email_username_input.delete(0, END)
     password_input.delete(0, END)
 
-# ---------------------------- UI SETUP ------------------------------- #
 
+# ---------------------------- UI SETUP ------------------------------- #
 
 windows = Tk()
 windows.title("Password Manager")
@@ -136,13 +136,13 @@ password_input = Entry(width=30)
 password_input.grid(column=1, row=3)
 
 # buttons
-search_button = Button(width=12, text="Search", command=find_password)
+search_button = Button(width=12, text="Buscar", command=find_password)
 search_button.grid(column=2, row=1)
 
-password_generate_button = Button(text="Generate Password", command=gen_password)
+password_generate_button = Button(text="Generar Password", command=gen_password)
 password_generate_button.grid(column=2, row=3)
 
-add_register_button = Button(width=41, text="Add", command=save)
+add_register_button = Button(width=41, text="Agregar", command=save)
 add_register_button.grid(column=1, row=4, columnspan=2)
 
 

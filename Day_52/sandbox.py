@@ -4,7 +4,7 @@ from selenium.common.exceptions import ElementClickInterceptedException
 import time
 import config
 
-CHROME_DRIVER_PATH = "C:\Development\chromedriver.exe"
+CHROME_DRIVER_PATH = "C:\WebDriver\chromedriver.exe"
 SIMILAR_ACCOUNT = "buzzfeedtasty"
 USERNAME = config.email
 PASSWORD = config.passw

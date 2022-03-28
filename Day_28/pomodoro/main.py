@@ -6,9 +6,9 @@ RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = 25
+WORK_MIN = 1
 SHORT_BREAK_MIN = 5
-LONG_BREAK_MIN = 20
+LONG_BREAK_MIN = 10
 reps = 0
 timer = None
 # ---------------------------- TIMER RESET ------------------------------- #
@@ -29,10 +29,10 @@ def time_reset():
 def start_time():
     global reps
     reps += 1
-    if reps%8 == 0:
+    if reps % 8 == 0:
         count_down(LONG_BREAK_MIN*60)
         pomodoro_title.config(text="Long Break", fg=RED)
-    elif reps%2 == 0:
+    elif reps % 2 == 0:
         count_down(SHORT_BREAK_MIN*60)
         pomodoro_title.config(text="Break", fg=PINK)
     else:

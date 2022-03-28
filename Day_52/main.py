@@ -4,7 +4,7 @@ from selenium.common.exceptions import ElementClickInterceptedException, NoSuchE
 import time
 import config
 
-CHROME_DRIVER_PATH = "C:\Development\chromedriver.exe"
+CHROME_DRIVER_PATH = "C:\WebDriver\chromedriver.exe"
 INSTAGRAM_EMAIL = config.email
 INSTAGRAM_PASSWORD = config.passw
 

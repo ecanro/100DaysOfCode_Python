@@ -22,8 +22,8 @@ response = requests.get(url=URL_ZILLOW, headers=header)
 soup = BeautifulSoup(response.text, "html.parser")
 
 all_link_buildings = soup.select(".list-card-top a")[:1]
-# print(all_buildings)
-# building_link = [building.getText() for building in all_buildings]
+print(all_link_buildings)
+building_link = [building.getText() for building in all_link_buildings]
 
 # Get the links
 all_links = []

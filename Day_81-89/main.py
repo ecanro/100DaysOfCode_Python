@@ -1,5 +1,5 @@
 import pandas as pd
-import matplotlib as plt
+import matplotlib.pyplot as plt #matplotlib ver 3.5.1 need this syntax
 
 df_tesla = pd.read_csv('./data/TESLA Search Trend vs Price.csv')
 
@@ -48,6 +48,7 @@ df_BTC_price.DATE = pd.to_datetime(df_BTC_price.DATE)
 
 df_tesla.MONTH.head()
 
+
 #Resampling Time Series Data
 #Daily data into Monthly data in bitcoin and btc data
 #After resampling, we need to figure out how the data should be treated. In our case, we want the last available price of the month - the price at month-end.
@@ -56,6 +57,7 @@ df_btc_monthly = df_BTC_price.resample('M', on="DATE").last()
 df_btc_monthly = df_BTC_price.resample('M', on="DATE").mean()
 print(df_btc_monthly.shape)
 df_btc_monthly.head()
+
 
 #Data Visualization with matplolib
 #Plot the Tesla stock price against the Tesla search volume using a line chart and two different axes.
@@ -67,6 +69,7 @@ ax2.set_ylabel('Search trend')
 
 ax1.plot(df_tesla.MONTH, df_tesla.TSLA_USD_CLOSE, color='#E6232E')
 ax2.plot(df_tesla.MONTH, df_tesla.TSLA_WEB_SEARCH, color='green')
+plt.show()
 
 
 
