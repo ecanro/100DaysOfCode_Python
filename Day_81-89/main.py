@@ -61,15 +61,37 @@ df_btc_monthly.head()
 
 #Data Visualization with matplolib
 #Plot the Tesla stock price against the Tesla search volume using a line chart and two different axes.
+
+plt.figure(figsize=(14, 8), dpi=120)
+plt.title('Tesla Web Search vs Price', fontsize=18)
+
+# Increase the size and rotate the labels on the x-axis
+plt.xticks(fontsize=14, rotation=45)
+
+
 ax1 = plt.gca()
 ax2 = plt.twinx()
 
-ax1.set_ylabel('TSLA Stock Price')
-ax2.set_ylabel('Search trend')
 
-ax1.plot(df_tesla.MONTH, df_tesla.TSLA_USD_CLOSE, color='#E6232E')
-ax2.plot(df_tesla.MONTH, df_tesla.TSLA_WEB_SEARCH, color='green')
+# Also, increase fontsize and linewidth for larger charts
+ax1.set_ylabel('TSLA Stock Price', color="#1C86EE", fontsize=14)
+ax2.set_ylabel('Search trend', color="#FF4500", fontsize=14)
+
+
+# Set the minimum and maximum values on the axes
+ax1.set_ylim([0, 600])
+ax1.set_xlim([df_tesla.MONTH.min(), df_tesla.MONTH.max()])
+
+
+ax1.plot(df_tesla.MONTH, df_tesla.TSLA_USD_CLOSE, color='#E6232E', linewidth=3)#using HEX color code
+ax2.plot(df_tesla.MONTH, df_tesla.TSLA_WEB_SEARCH, color='blue', linewidth=3)
+
+# Displays chart explicitly
 plt.show()
+
+
+
+
 
 
 
