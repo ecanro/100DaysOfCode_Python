@@ -6,7 +6,7 @@ import matplotlib.dates as mdates
 
 df_unemployed = pd.read_csv('./data/UE Benefits Search vs UE Rate 2004-19.csv')
 
-#Rolling Average
+# Calculate the rolling average over a 6 month window
 df_rolling = df_unemployed[['UE_BENEFITS_WEB_SEARCH', 'UNRATE']].rolling(window=6).mean()
 # number of row and columns
 df_unemployed.shape
@@ -63,11 +63,9 @@ ax2.plot(df_unemployed.MONTH, df_unemployed.UE_BENEFITS_WEB_SEARCH, color='blue'
 # Displays chart explicitly
 plt.show()
 
-# Calculate the rolling average over a 6 month window
-roll_df = df_unemployed[['UE_BENEFITS_WEB_SEARCH', 'UNRATE']].rolling(window=6).mean()
 
-ax1.plot(df_unemployed.MONTH, roll_df.UNRATE, 'purple', linewidth=3, linestyle='-.')
-ax2.plot(df_unemployed.MONTH, roll_df.UE_BENEFITS_WEB_SEARCH, 'skyblue', linewidth=3)
+ax1.plot(df_unemployed.MONTH, df_rolling.UNRATE, 'purple', linewidth=3, linestyle='-.')
+ax2.plot(df_unemployed.MONTH, df_rolling.UE_BENEFITS_WEB_SEARCH, 'skyblue', linewidth=3)
 
 plt.show()
 
