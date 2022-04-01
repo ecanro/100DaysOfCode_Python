@@ -34,3 +34,10 @@ df_clean.info()
 
 df_clean = df_clean.dropna()
 df_clean.info()
+duplicates = df_clean.duplicated()
+print(duplicates)
+
+#we need specify the subset of columns to check for duplicates
+df_clean = df_clean.drop_duplicates(subset=['App', 'Type', 'Price'])
+print(df_clean.head())
+print(df_clean[df_clean.App == 'Instagram'])
