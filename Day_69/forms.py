@@ -1,10 +1,12 @@
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField
+from flask_wtf import FlaskForm, CSRFProtect
+from wtforms import StringField, SubmitField, PasswordField, TextAreaField
 from wtforms.validators import DataRequired, URL
 from flask_ckeditor import CKEditorField
 
 
 ##WTForm
+csrf = CSRFProtect()
+
 class CreatePostForm(FlaskForm):
     title = StringField("Blog Post Title", validators=[DataRequired()])
     subtitle = StringField("Subtitle", validators=[DataRequired()])
@@ -30,3 +32,10 @@ class CommentForm(FlaskForm):
     comment_text = CKEditorField("Comment", validators=[DataRequired()])
     submit = SubmitField("Submit Comment")
 
+
+class ContactForm(FlaskForm):
+    name = StringField("Name", validators=[DataRequired('Please enter your name.')])
+    email = StringField("Email", validators=[DataRequired('Please enter your email.')])
+    phone = StringField("Phone", validators=[DataRequired('Please enter your phone number.')])
+    message = TextAreaField("Message", validators=[DataRequired('Please enter your message.')])
+    submit = SubmitField("Send Message")

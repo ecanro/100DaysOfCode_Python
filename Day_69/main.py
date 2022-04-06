@@ -1,4 +1,5 @@
-from flask import Flask, render_template, redirect, url_for, flash, abort
+import os
+from flask import Flask, render_template, redirect, url_for, flash, abort, request
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
 from datetime import date
@@ -7,15 +8,34 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
-from forms import LoginForm, RegisterForm, CreatePostForm, CommentForm
+from forms import LoginForm, RegisterForm, CreatePostForm, CommentForm, ContactForm, csrf
 from flask_gravatar import Gravatar
+from flask_mail import Mail, Message
+
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+
+mail = Mail()
+
+SECRET_KEY = os.urandom(32)
+app.config['SECRET_KEY'] = SECRET_KEY
+csrf.init_app(app)
+
+
 ckeditor = CKEditor(app)
 Bootstrap(app)
 gravatar = Gravatar(app, size=100, rating='g', default='retro', force_default=False, force_lower=False, use_ssl=False,
                     base_url=None)
+
+#Config the smtp server
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'edgar.canro@gmail.com'
+app.config['MAIL_PASSWORD'] = '*****'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+
+mail.init_app(app) #Initialize the mail
 
 ## CONNECT TO DB
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
@@ -172,9 +192,31 @@ def about():
 
 
 ###CONTACT PAGE
-@app.route("/contact")
-def contact():
-    return render_template("contact.html", current_user=current_user)
+@app.route("/contact", method=["GET", "POST"])
+def get_contact():
+    form = ContactForm()
+    if form.validate_on_submit():
+        print('-------------------------')
+        print(request.form['name'])
+        print(request.form['email'])
+        print(request.form['subject'])
+        print(request.form['message'])
+        print('-------------------------')
+        send_message(request.form)
+        return render_template('contact.html', form=form)
+
+    return render_template('contact.html', form=form)
+    # return render_template("contact.html", current_user=current_user)
+
+def send_message(message):
+    print(message.get('name'))
+
+    msg = Message(message.get('subject'), sender = message.get('email'),
+            recipients = ['id1@gmail.com'],
+            body= message.get('message')
+    )
+    mail.send(msg)
+
 
 ###CREATE POST
 @app.route("/new-post", methods=["GET", "POST"])
